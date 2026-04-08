@@ -13,7 +13,65 @@ Created on Wed Apr  1 11:23:26 2026
 
 @author: adla309
 """
+from abc import ABC, abstractmethod
 
+class Piece(ABC):
+    def __init__(self, position, couleur):
+        
+        self.position = position
+        self.couleur = couleur
+
+    @abstractmethod
+    def isValidMove(self, newPosition, board):
+       pass
+
+    @abstractmethod
+    def __str__(self):
+        pass
+
+
+class King(Piece):
+    def isValidMove(self, newPosition, board):
+        return True
+
+    def __str__(self):
+        return "K"
+
+class Queen(Piece):
+    def isValidMove(self, newPosition, board):
+        return True
+
+    def __str__(self):
+        return "Q" 
+
+class Bishop(Piece):
+    def isValidMove(self, newPosition, board):
+        return True
+
+    def __str__(self):
+        return "B" 
+
+class Knight(Piece):
+    def isValidMove(self, newPosition, board):
+        return True
+
+    def __str__(self):
+        return "N" 
+
+class Rook(Piece):
+    def isValidMove(self, newPosition, board):
+        return True
+
+    def __str__(self):
+        return "R" 
+
+class Pawn(Piece):
+    def isValidMove(self, newPosition, board):
+        return True
+
+    def __str__(self):
+        return "P" 
+    
 class player :
     def __init__(self,name,color):
         self.name=name
