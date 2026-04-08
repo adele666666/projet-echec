@@ -13,7 +13,7 @@ Created on Wed Apr  1 11:23:26 2026
 
 @author: adla309
 """
-print("génial ca marche")
+
 class player :
     def __init__(self,name,color):
         self.name=name
@@ -52,7 +52,3 @@ class player :
 
             return (piece_start, pos_start, pos_end)
         
-if __name__ == "__main__":
-    player1 = player("Alice", 0)
-    coup = player1.askMove()
-    print("Coup saisi :", coup)
