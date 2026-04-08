@@ -6,6 +6,7 @@ Created on Wed Apr  1 11:23:26 2026
 @author: adla309
 """
 
-x = 5
+x = 7
 
 print(x)
+
