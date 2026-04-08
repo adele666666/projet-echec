@@ -13,7 +13,7 @@ Created on Wed Apr  1 11:23:26 2026
 
 @author: adla309
 """
-
+print("génial ca marche")
 class player :
     def __init__(self,name,color):
         self.name=name
