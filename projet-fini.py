@@ -5,7 +5,7 @@ Created on Wed May 27 12:09:19 2026
 
 @author: adla309
 """
-
+print("coucou")
 import random
 import copy
 
