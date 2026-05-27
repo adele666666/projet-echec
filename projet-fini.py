@@ -5,9 +5,9 @@ Created on Wed May 27 12:09:19 2026
 
 @author: adla309
 """
-print("coucou")
 import random
 import copy
+import json
 
 # ================= POSITION =================
 class Position:
@@ -220,6 +220,53 @@ class Board:
         new_board.movePiece(start, end)
         return new_board
 
+    # ================= SAVE / LOAD =================
+    def saveGame(self, filename="save.json"):
+        data = []
+
+        for pos, piece in self.pieces.items():
+            data.append({
+                "type": piece.__class__.__name__,
+                "color": piece.color,
+                "column": pos.column,
+                "row": pos.row,
+                "has_moved": piece.has_moved
+            })
+
+        with open(filename, "w") as f:
+            json.dump(data, f, indent=4)
+
+        print("Partie sauvegardée.")
+
+    def loadGame(self, filename="save.json"):
+        with open(filename, "r") as f:
+            data = json.load(f)
+
+        self.pieces = {}
+
+        piece_classes = {
+            "King": King,
+            "Queen": Queen,
+            "Rook": Rook,
+            "Bishop": Bishop,
+            "Knight": Knight,
+            "Pawn": Pawn
+        }
+
+        for item in data:
+            pos = Position(item["column"], item["row"])
+
+            piece = piece_classes[item["type"]](
+                pos,
+                item["color"]
+            )
+
+            piece.has_moved = item["has_moved"]
+
+            self.pieces[pos] = piece
+
+        print("Partie chargée.")
+
 
 # ================= PLAYER =================
 class Player:
@@ -288,7 +335,7 @@ class Chess:
         if not piece.isValidMove(end, self.board):
             return False
 
-        #  interdit de se mettre en échec
+        # interdit de se mettre en échec
         new_board = self.board.simulateMove(start, end)
         if new_board.isInCheck(self.currentPlayer.color):
             return False
@@ -334,13 +381,26 @@ class Chess:
                 break
 
             move = ""
-            while not self.isValidMove(move):
+
+            while True:
                 move = self.currentPlayer.askMove()
+
+                if move == "save":
+                    self.board.saveGame()
+                    continue
+
+                if move == "load":
+                    self.board.loadGame()
+                    self.displayBoard()
+                    continue
+
+                if self.isValidMove(move):
+                    break
 
             self.updateBoard(move)
             self.switchPlayer()
 
 
-# ================= MAIN =================
-if __name__ == "__main__":
-    Chess().play()
+# ================= START =================
+game = Chess()
+game.play()
